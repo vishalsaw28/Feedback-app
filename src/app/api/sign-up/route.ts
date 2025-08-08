@@ -8,6 +8,8 @@ export async function POST(request: Request) {
 
   try {
     const { username, email, password } = await request.json();
+    console.log("Password received from client:", password);
+
     const existingUserVerifiedByUsername = UserModel.findOne({
       username,
       isVerified: true,
@@ -85,16 +87,16 @@ export async function POST(request: Request) {
         success: true,
         message: "User registered successfully. Please verify your email",
       },
-      { status: 500 }
+      { status: 200 }
     );
   } catch (error) {
     console.error("Error registering user", error);
-    return Response.json({
-      success: false,
-      message: "Error registering user",
-    });
-    {
-      status: 500;
-    }
+    return Response.json(
+      {
+        success: false,
+        message: "Error registering user",
+      },
+      { status: 200 }
+    );
   }
 }
