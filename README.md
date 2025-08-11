@@ -47,3 +47,41 @@ implement SignInForm with validation, NextAuth integration, and responsive UI
 - Configured router-based navigation with useRouter for redirecting to dashboard on success
 - Set defaultValues in useForm for controlled inputs
 - Applied shadowed card-style container with rounded corners for polished UI
+
+feat(dashboard): implement user dashboard with message management, profile link sharing, and settings control
+
+- Built user dashboard page using React, TypeScript, and Next.js App Router
+- Integrated session handling with next-auth's useSession to show personalized content
+- Managed component state with useState and optimized data fetching using useCallback and useEffect
+- Implemented form state for settings toggle with react-hook-form and zod validation via zodResolver
+- Added ability to fetch and display messages from backend using axios
+- Created message list rendering with MessageCard component for individual message display and deletion
+- Enabled toggle for accepting messages using ShadCN UI Switch component, synced with backend API
+- Added “Copy Your Unique Link” section with profile URL generation and clipboard copy functionality using navigator.clipboard
+- Included ShadCN UI Button for actions and lucide-react icons (Loader2, RefreshCcw) for loading and refresh states
+- Styled layout with Tailwind CSS, including responsive grid for messages and container card design
+- Added refresh button with conditional spinner to fetch latest messages on demand
+- Displayed toast notifications with sonner for all user interactions and API responses
+- Included ShadCN UI Separator for clean section separation
+- Handled API errors with type-safe AxiosError and displayed appropriate feedback
+
+feat(home): implement landing page with autoplay carousel of messages
+
+- Built responsive Home page using React, TypeScript, and Next.js App Router
+- Added hero section with title and description introducing anonymous conversations
+- Implemented carousel using ShadCN UI Carousel, CarouselContent, CarouselItem, CarouselNext, and CarouselPrevious components
+- Integrated Embla Autoplay plugin for automatic slide transitions with 2-second delay
+- Displayed message data from local messages.json for dynamic content rendering
+- Used ShadCN UI Card, CardHeader, CardTitle, and CardContent for structured slide presentation
+- Included Mail icon from lucide-react for visual enhancement of each message
+- Applied Tailwind CSS for spacing, typography, and responsive layout across devices
+
+feat(api/messages): add DELETE endpoint for removing user messages
+
+- Implemented DELETE API route with Next.js App Router and dynamic route parameter for message ID
+- Connected to MongoDB via dbConnect utility
+- Used getServerSession with NextAuth authOptions to authenticate user sessions
+- Performed secure message deletion using Mongoose updateOne with $pull operator
+- Returned appropriate HTTP status codes and JSON responses for success, not found, and authentication errors
+- Added error handling with console logging for server-side debugging
+- Ensured type safety with NextAuth User type and Message model integration
