@@ -7,10 +7,10 @@ import UserModel from "@/model/User";
 export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
-      id: "credentils",
+      id: "credentials",
       name: "Credentials",
       credentials: {
-        email: { label: "Email", type: "text" },
+        identifier: { label: "Email or username", type: "text" },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials: any): Promise<any> {
@@ -41,7 +41,7 @@ export const authOptions: NextAuthOptions = {
             throw new Error("Incorrect Password");
           }
         } catch (error: any) {
-          throw new error();
+          throw new Error(error.message || "Authentication error");
         }
       },
     }),
@@ -50,19 +50,20 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token._id = user._id?.toString();
+        // token._id = user._id?.toString();
+        token._id = user._id as string;
         token.isVerified = user.isVerified;
-        token.isAcceptingMessage = user.isAcceptingMessages;
+        token.isAcceptingMessages = user.isAcceptingMessages;
         token.username = user.username;
       }
       return token;
     },
     async session({ session, token }) {
-      if (token) {
-        session.user._id = token._id;
-        session.user.isVerified = token.isVerified;
-        session.user.isAcceptingMessages = token.isAcceptingMessages;
-        session.user.username = token.username;
+      if (session.user) {
+        session.user._id = token._id as string;
+        session.user.isVerified = token.isVerified as boolean;
+        session.user.isAcceptingMessages = token.isAcceptingMessages as boolean;
+        session.user.username = token.username as string;
       }
       return session;
     },

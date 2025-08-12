@@ -8,7 +8,7 @@ import { AcceptMessageScchema } from "@/schemas/acceptMessageSchema";
 import { useForm } from "react-hook-form";
 import axios, { Axios, AxiosError } from "axios";
 import { ApiResponse } from "@/types/ApiResponse";
-import { toast } from "sonner";
+import { toast, Toaster } from "sonner";
 import MessageCard from "@/components/MessageCard";
 import { Button } from "@/components/ui/button";
 import { useCopyToClipboard } from "usehooks-ts";
@@ -98,7 +98,7 @@ function page() {
       toast("", { description: response.data.message });
     } catch (error) {
       const axiosError = error as AxiosError<ApiResponse>;
-      toast("Error", {
+      toast("sss", {
         description:
           axiosError.response?.data.message ||
           "Failed to fetch message setting",
@@ -106,15 +106,24 @@ function page() {
     }
   };
 
-  const { username } = session?.user as User;
-  const baseUrl = `${window.location.protocol}//${window.location.host}`;
+  // const { username } = session?.user as User;
+  // const baseUrl = `${window.location.protocol}//${window.location.host}`;
+  let baseUrl = "";
+  if (typeof window !== "undefined") {
+    baseUrl = `${window.location.protocol}//${window.location.host}`;
+  }
+
+  const username = (session?.user as User)?.username ?? "";
+  // const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   const profileUrl = `${baseUrl}/u/${username}`;
 
   const useCopyToClipboard = () => {
     navigator.clipboard.writeText(profileUrl);
-    toast("URL copied", {
-      description: "Profile URL has been copied to clipboard",
-    });
+    // toast("URL copied", {
+    //   description: "Profile URL has been copied to clipboard",
+    // });
+    toast.success("Profile URL has been copied to clipboard");
+    <Toaster richColors />;
   };
 
   if (!session || !session.user) {
