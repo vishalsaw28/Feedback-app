@@ -18,20 +18,16 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "./ui/button";
-// Update the import path below to the correct relative path if needed
-// Update the import path below to the correct relative path if needed
 import { ApiResponse } from "@/types/ApiResponse";
 import { toast } from "sonner";
+// import messages from "@/src/messages.json";
 
 type MessageCardProps = {
   message: Message;
   onMessageDelete: (messageId: string) => void;
 };
 
-export default function MessageCard({
-  message,
-  onMessageDelete,
-}: MessageCardProps) {
+export function MessageCard({ message, onMessageDelete }: MessageCardProps) {
   const handleDeleteConfirm = async () => {
     try {
       const response = await axios.delete<ApiResponse>(

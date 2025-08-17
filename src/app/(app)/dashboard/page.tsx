@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form";
 import axios, { Axios, AxiosError } from "axios";
 import { ApiResponse } from "@/types/ApiResponse";
 import { toast, Toaster } from "sonner";
-import MessageCard from "@/components/MessageCard";
+import { MessageCard } from "@/components/MessageCard";
 import { Button } from "@/components/ui/button";
 import { useCopyToClipboard } from "usehooks-ts";
 import { Switch } from "@/components/ui/switch";
@@ -98,7 +98,7 @@ function page() {
       toast("", { description: response.data.message });
     } catch (error) {
       const axiosError = error as AxiosError<ApiResponse>;
-      toast("sss", {
+      toast("Error", {
         description:
           axiosError.response?.data.message ||
           "Failed to fetch message setting",
@@ -190,6 +190,9 @@ function page() {
           <p>No messages to display.</p>
         )}
       </div>
+      {/* <MessageCard message={undefined} onMessageDelete={function (messageId: string): void {
+        throw new Error("Function not implemented.");
+      } } /> */}
     </div>
   );
 }

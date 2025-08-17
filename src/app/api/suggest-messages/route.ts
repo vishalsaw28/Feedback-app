@@ -45,7 +45,7 @@ export async function POST(req: Request) {
     return result.toUIMessageStreamResponse();
   } catch (error) {
     if (error instanceof OpenAI.APIError) {
-      const { name, status, headers, message } = error;
+      const { name, status, headers, message } = error as any;
       return NextResponse.json(
         {
           name,
